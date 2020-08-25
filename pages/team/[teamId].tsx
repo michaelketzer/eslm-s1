@@ -3,6 +3,7 @@ import {promises as fs} from 'fs';
 import { TeamStats } from "..";
 import TopPicks from "../../Components/TopPicks";
 import {PageHeader} from 'antd';
+import TopBans from "../../Components/TopBans";
 
 //#region <interface>
 interface PickBan {
@@ -195,15 +196,18 @@ const Team = ({teamId, teamMatches}: {teamId: number; teamMatches: LeagueMatch[]
     const team = teams[teamId];
     return <>
         <PageHeader
-        onBack={() => window.history.back()}
-        title={<div className={'row'}>
-            {team.avatar && team.avatar.length > 0 && <div className={'avatar'}><img className={'img'} src={team.avatar} width={120}/></div>}
-            <div>{team.name}</div>
-        </div>}
+            onBack={() => window.history.back()}
+            title={<div className={'row'}>
+                {team.avatar && team.avatar.length > 0 && <div className={'avatar'}><img className={'img'} src={team.avatar} width={120}/></div>}
+                <div>{team.name}</div>
+            </div>}
         >
             <br />
             <br />
             <TopPicks matches={teamMatches} teamId={teamId}/>
+            <br />
+            <br />
+            <TopBans matches={teamMatches} teamId={teamId}/>
         </PageHeader>
 
         <style jsx>{`
