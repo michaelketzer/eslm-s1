@@ -2,6 +2,7 @@ import { ReactElement, useState, useMemo } from "react";
 import { MappedTeamStats } from "../pages";
 import {Button, Input, Table, Tooltip} from 'antd';
 import Link from 'next/link';
+import accounting from 'accounting';
 
 const columns = [
     {
@@ -29,97 +30,6 @@ const columns = [
       align:'center',
     },
     {
-        title: 'AVG',
-        children: [
-            {
-              title: <Tooltip title="Kills"><div>Kills</div></Tooltip>,
-              dataIndex: 'kills',
-              key: 'kills',
-              width: '60px',
-              align:'center',
-              render: (text) => <>{Math.round(text)}</>,
-            },
-            {
-                title: <Tooltip title="Kills"><div>Deaths</div></Tooltip>,
-              dataIndex: 'deaths',
-              key: 'deaths',
-              width: '60px',
-              align:'center',
-              render: (text) => <>{Math.round(text)}</>,
-            },
-            {
-                title: <Tooltip title="Kills"><div>Assists</div></Tooltip>,
-              dataIndex: 'assists',
-              key: 'assists',
-              width: '60px',
-              align:'center',
-              render: (text) => <>{Math.round(text)}</>,
-            },
-            {
-              title: <Tooltip title="Last Hits"><div>CS</div></Tooltip>,
-              dataIndex: 'cs',
-              key: 'cs',
-              width: '50px',
-              align:'center',
-              render: (text) => <>{Math.round(text)}</>,
-            },
-            {
-              title: <Tooltip title="Gold pro Minute"><div>GPM</div></Tooltip>,
-              dataIndex: 'gpm',
-              key: 'gpm',
-              width: '50px',
-              align:'center',
-              render: (text) => <>{Math.round(text)}</>,
-            },
-            {
-              title: <Tooltip title="EXP pro Minute"><div>XPM</div></Tooltip>,
-              dataIndex: 'xpm',
-              key: 'xpm',
-              width: '50px',
-              align:'center',
-              render: (text) => <>{Math.round(text)}</>,
-            },
-            {
-              title: <Tooltip title="Healing"><div>Heal</div></Tooltip>,
-              dataIndex: 'heal',
-              key: 'heal',
-              width: '80px',
-              align:'center',
-              render: (text) => <>{Math.round(text)}</>,
-            },
-            {
-              title: <Tooltip title="Hero Damage"><div>H DMG</div></Tooltip>,
-              dataIndex: 'heroDamage',
-              key: 'heroDamage',
-              width: '80px',
-              align:'center',
-              render: (text) => <>{Math.round(text)}</>,
-            },
-            {
-              title: <Tooltip title="Tower Damage"><div>T DMG</div></Tooltip>,
-              dataIndex: 'towerDamage',
-              key: 'towerDamage',
-              width: '80px',
-              align:'center',
-              render: (text) => <>{Math.round(text)}</>,
-            },
-            {
-              title: 'Länge',
-              dataIndex: 'duration',
-              key: 'duration',
-              width: '100px',
-              align:'center',
-              render: (text) => {
-                  let hrs = Math.floor(+text / 60);
-                  let min: string | number = Math.floor(+text % 60);
-                  min = min < 10 ? '0' + min : min;
-
-                  return `${hrs}:${min}`
-              }
-            },
-        ],
-    },
-    {
         title: 'Spiele',
         dataIndex: 'games',
         key: 'games',
@@ -136,6 +46,97 @@ const columns = [
         </>,
         sorter: (a:MappedTeamStats, b: MappedTeamStats) => a.matchCount > 2 && b.matchCount > 2 ? Math.round((a.matchWins * 100) / a.matchCount) - Math.round((b.matchWins * 100) / b.matchCount) : a.matchCount - b.matchCount,
         width: '150px',
+    },
+    {
+        title: 'AVG',
+        children: [
+            {
+              title: <Tooltip title="Kills"><div>Kills</div></Tooltip>,
+              dataIndex: 'kills',
+              key: 'kills',
+              width: '80px',
+              align:'center',
+              render: (text) => <>{accounting.format(Math.round(text), 0, '.')}</>,
+            },
+            {
+                title: <Tooltip title="Kills"><div>Deaths</div></Tooltip>,
+              dataIndex: 'deaths',
+              key: 'deaths',
+              width: '80px',
+              align:'center',
+              render: (text) => <>{accounting.format(Math.round(text), 0, '.')}</>,
+            },
+            {
+                title: <Tooltip title="Kills"><div>Assists</div></Tooltip>,
+              dataIndex: 'assists',
+              key: 'assists',
+              width: '80px',
+              align:'center',
+              render: (text) => <>{accounting.format(Math.round(text), 0, '.')}</>,
+            },
+            {
+              title: <Tooltip title="Last Hits"><div>CS</div></Tooltip>,
+              dataIndex: 'cs',
+              key: 'cs',
+              width: '80px',
+              align:'center',
+              render: (text) => <>{accounting.format(Math.round(text), 0, '.')}</>,
+            },
+            {
+              title: <Tooltip title="Gold pro Minute"><div>GPM</div></Tooltip>,
+              dataIndex: 'gpm',
+              key: 'gpm',
+              width: '80px',
+              align:'center',
+              render: (text) => <>{accounting.format(Math.round(text), 0, '.')}</>,
+            },
+            {
+              title: <Tooltip title="EXP pro Minute"><div>XPM</div></Tooltip>,
+              dataIndex: 'xpm',
+              key: 'xpm',
+              width: '80px',
+              align:'center',
+              render: (text) => <>{accounting.format(Math.round(text), 0, '.')}</>,
+            },
+            {
+              title: <Tooltip title="Healing"><div>Heal</div></Tooltip>,
+              dataIndex: 'heal',
+              key: 'heal',
+              width: '80px',
+              align:'center',
+              render: (text) => <>{accounting.format(Math.round(text), 0, '.')}</>,
+            },
+            {
+              title: <Tooltip title="Hero Damage"><div>H DMG</div></Tooltip>,
+              dataIndex: 'heroDamage',
+              key: 'heroDamage',
+              width: '80px',
+              align:'center',
+              render: (text) => <>{accounting.format(Math.round(text), 0, '.')}</>,
+            },
+            {
+              title: <Tooltip title="Tower Damage"><div>T DMG</div></Tooltip>,
+              dataIndex: 'towerDamage',
+              key: 'towerDamage',
+              width: '80px',
+              align:'center',
+              render: (text) => <>{accounting.format(Math.round(text), 0, '.')}</>,
+            },
+            {
+              title: 'Länge',
+              dataIndex: 'duration',
+              key: 'duration',
+              width: '100px',
+              align:'center',
+              render: (text) => {
+                  let hrs = Math.floor(+text / 60);
+                  let min: string | number = Math.floor(+text % 60);
+                  min = min < 10 ? '0' + min : min;
+
+                  return `${hrs}:${min}`
+              }
+            },
+        ],
     },
     {
         title: '',
