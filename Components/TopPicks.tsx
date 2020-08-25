@@ -80,7 +80,7 @@ export default function TopPicks({matches, teamId}: {matches: LeagueMatch[]; tea
 
     return <>
         <Row gutter={[{ xs: 8, sm: 16, lg: 24 }, { xs: 8, sm: 16, lg: 24 }]} align="middle">
-            <Col className="gutter-row" span={8}>
+            <Col className="gutter-row" xs={24} md={24} lg={12} xl={8}>
                 <Card title={<div className={'header'}>
                     <div>Am häufigsten gepickt</div>
                     <div className={'weak'}>{matches.length} Spiel(e)</div>
@@ -92,10 +92,10 @@ export default function TopPicks({matches, teamId}: {matches: LeagueMatch[]; tea
                     </div>
                 </Card>
             </Col>
-            <Col lg={16} sm={8}>
+            <Col xs={24} sm={24} lg={12} xl={16}>
                 <Row gutter={[{ xs: 8, sm: 16, lg: 24 }, { xs: 8, sm: 16, lg: 24 }]}>
-                    <Col className="gutter-row" span={12}>
-                    <Card title={<div className={'header'}>
+                    <Col className="gutter-row" xs={24} sm={12} lg={24} xl={12}>
+                        <Card title={<div className={'header'}>
                             <div>Höchste Win Rate</div>
                             <div className={'weak'}>in Spielen</div>
                         </div>}>
@@ -106,7 +106,7 @@ export default function TopPicks({matches, teamId}: {matches: LeagueMatch[]; tea
                             </div>
                         </Card>
                     </Col>
-                    <Col className="gutter-row" span={12}>
+                    <Col className="gutter-row" xs={24} sm={12} lg={24} xl={12}>
                     <Card title={<div className={'header'}>
                             <div>Am häufigsten in der 1. Phase</div>
                             <div className={'weak'}>aus Picks</div>
@@ -118,7 +118,7 @@ export default function TopPicks({matches, teamId}: {matches: LeagueMatch[]; tea
                             </div>
                         </Card>
                     </Col>
-                    <Col className="gutter-row" span={12}>
+                    <Col className="gutter-row" xs={24} sm={12} lg={24} xl={12}>
                         <Card title={<div className={'header'}>
                                 <div>Am häufigsten in der 2. Phase</div>
                                 <div className={'weak'}>aus Picks</div>
@@ -130,7 +130,7 @@ export default function TopPicks({matches, teamId}: {matches: LeagueMatch[]; tea
                             </div>
                         </Card>
                     </Col>
-                    <Col className="gutter-row" span={12}>
+                    <Col className="gutter-row" xs={24} sm={12} lg={24} xl={12}>
                         <Card title={<div className={'header'}>
                                 <div>Am häufigsten in der 3. Phase</div>
                                 <div className={'weak'}>aus Picks</div>
