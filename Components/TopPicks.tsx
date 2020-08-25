@@ -1,7 +1,7 @@
 import { ReactElement, useMemo, Fragment } from "react";
 import { LeagueMatch } from "../pages/team/[teamId]";
 import Hero from "./Hero";
-import {Card, Col, Row} from 'antd';
+import {Card, Col, Row, Tooltip} from 'antd';
 
 interface HeroStats {
     games: number;
@@ -69,8 +69,8 @@ export default function TopPicks({matches, teamId}: {matches: LeagueMatch[]; tea
             <Col className="gutter-row" span={6}>
                 <Card title={'Top Picks'}>
                     <div className={'topPicks'}>
-                        {topPicks.map(({id, games}, idx) => <Fragment key={id}>
-                            <Hero id={id} key={id} pos={idx + 1} addition={<div className={'right'}>{games} Spiele</div>}/>
+                        {topPicks.map(({id, won, games}, idx) => <Fragment key={id}>
+                            <Hero id={id} key={id} pos={idx + 1} addition={<div className={'right'}>{games} Spiele <Tooltip title={'Win Rate'}><span className={'weak'}>{Math.floor((won*100)/games)}%</span></Tooltip></div>}/>
                         </Fragment>)}
                     </div>
                 </Card>
@@ -116,6 +116,11 @@ export default function TopPicks({matches, teamId}: {matches: LeagueMatch[]; tea
 
             .right {
                 text-align: right;
+            }
+
+            .weak {
+                font-size: 12px;
+                color: #999;
             }
         `}</style>
     </>;
