@@ -24,6 +24,14 @@ export function requireHeroStats(heroId: number, acc: {[x: string]: HeroStats}):
 
     return acc[heroId];
 }
+
+export function getPhase(order: number, gameVersion: number): number {
+    if(gameVersion <= 131) {
+        return order < 12 ? 1 : (order < 18 ? 2 : 3);
+    }
+    return order < 8 ? 1 : (order < 18 ? 2 : 3);
+}
+
 export default function TopPicks({matches, teamId}: {matches: LeagueMatch[]; teamId: number}): ReactElement {
     const pickStats = useMemo(() => {
         return matches.reduce<{[x: string]: HeroStats}>((acc, match) => {
@@ -37,9 +45,10 @@ export default function TopPicks({matches, teamId}: {matches: LeagueMatch[]; tea
                         const stats = requireHeroStats(heroId, acc);
                         stats.games = stats.games + 1;
                         stats.won = stats.won + (won ? 1 : 0);
-                        if(order < 8) {
+                        const phase = getPhase(order, match.gameVersionId);
+                        if(phase === 1) {
                             stats.phase1 = stats.phase1 + 1;
-                        } else if(order < 18) {
+                        } else if(phase === 2) {
                             stats.phase2 = stats.phase2 + 1;
                         } else {
                             stats.phase3 = stats.phase3 + 1;
