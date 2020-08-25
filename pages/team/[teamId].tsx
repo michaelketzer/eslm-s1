@@ -197,7 +197,7 @@ const Team = ({teamId, teamMatches}: {teamId: number; teamMatches: LeagueMatch[]
         <PageHeader
         onBack={() => window.history.back()}
         title={<div className={'row'}>
-            {team.avatar.length > 0 && <div className={'avatar'}><img className={'img'} src={team.avatar} width={120}/></div>}
+            {team.avatar && team.avatar.length > 0 && <div className={'avatar'}><img className={'img'} src={team.avatar} width={120}/></div>}
             <div>{team.name}</div>
         </div>}
         >
@@ -211,7 +211,7 @@ const Team = ({teamId, teamMatches}: {teamId: number; teamMatches: LeagueMatch[]
                 display: flex;
                 align-items: center;
             }
-            
+
             .avatar {
                 margin-right: 10px;
             }
