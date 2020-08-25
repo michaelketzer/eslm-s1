@@ -11,6 +11,13 @@ class MyApp extends App<AppInitialProps> {
 				.pageFrame {
 					padding: 20px 40px;
 				}	
+
+
+				@media only screen and (max-width: 600px) {
+					.pageFrame {
+						padding: 5px 10px;
+					}	
+				}
 			`}</style>
 		</div>;
 	}
