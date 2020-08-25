@@ -42,13 +42,13 @@ export default function TopBans({matches, teamId}: {matches: LeagueMatch[]; team
         return Object.entries(pickStats).sort(([, {games: a}], [, {games: b}]) => b - a).slice(0, 15).map(([id, data]) => ({id, ...data}));
     }, [pickStats]);
     const topBansFirstPhase = useMemo(() => {
-        return Object.entries(pickStats).sort(([, {phase1: a}], [, {phase1: b}]) => b - a).slice(0, 5).map(([id, data]) => ({id, ...data}));
+        return Object.entries(pickStats).sort(([, {phase1: a, games: gA}], [, {phase1: b, games: gB}]) => b - a || gB - gA).slice(0, 5).map(([id, data]) => ({id, ...data}));
     }, [pickStats]);
     const topBansSecondPhase = useMemo(() => {
-        return Object.entries(pickStats).sort(([, {phase2: a}], [, {phase2: b}]) => b - a).slice(0, 5).map(([id, data]) => ({id, ...data}));
+        return Object.entries(pickStats).sort(([, {phase2: a, games: gA}], [, {phase2: b, games: gB}]) => b - a || gB - gA).slice(0, 5).map(([id, data]) => ({id, ...data}));
     }, [pickStats]);
     const topBansThirdPhase = useMemo(() => {
-        return Object.entries(pickStats).sort(([, {phase3: a}], [, {phase3: b}]) => b - a).slice(0, 5).map(([id, data]) => ({id, ...data}));
+        return Object.entries(pickStats).sort(([, {phase3: a, games: gA}], [, {phase3: b, games: gB}]) => b - a || gB - gA).slice(0, 5).map(([id, data]) => ({id, ...data}));
     }, [pickStats]);
 
     return <>
