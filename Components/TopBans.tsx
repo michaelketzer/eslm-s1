@@ -55,7 +55,7 @@ export default function TopBans({matches, teamId}: {matches: LeagueMatch[]; team
         <Row gutter={[{ xs: 8, sm: 16, lg: 24 }, { xs: 8, sm: 16, lg: 24 }]} align="middle">
             <Col className="gutter-row" xs={24} md={24} lg={12} xl={8}>
                 <Card title={<div className={'header'}>
-                    <div>Am häufigsten gebannt</div>
+                    <div>Am häufigsten gegen das Team gebannt</div>
                     <div className={'weak'}>{matches.length} Spiel(e)</div>
                 </div>}>
                     <div className={'topPicks'}>
