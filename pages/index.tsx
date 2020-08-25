@@ -12,7 +12,7 @@ interface TeamOverview {
     matchWins: number;
     tmp: number;
 }
-interface TeamStats {
+interface Stats {
     index: number;
     teamId: number;
     kills: number;
@@ -37,10 +37,10 @@ interface TeamHeroes {
     }>;
 }
 
-interface TeamStats {
+export interface TeamStats {
     leagueTableTeam: {
         overview: Array<TeamOverview>;
-        stats: Array<TeamStats>;
+        stats: Array<Stats>;
         teamCount: number;
         heroes: Array<TeamHeroes>;
     }

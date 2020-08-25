@@ -26,6 +26,7 @@ const columns = [
       sorter: (a:MappedTeamStats, b: MappedTeamStats) => a.points - b.points,
       defaultSortOrder: 'descend',
       width: '100px',
+      align:'center',
     },
     {
         title: 'AVG',
@@ -35,6 +36,7 @@ const columns = [
               dataIndex: 'kills',
               key: 'kills',
               width: '60px',
+              align:'center',
               render: (text) => <>{Math.round(text)}</>,
             },
             {
@@ -42,6 +44,7 @@ const columns = [
               dataIndex: 'deaths',
               key: 'deaths',
               width: '60px',
+              align:'center',
               render: (text) => <>{Math.round(text)}</>,
             },
             {
@@ -49,6 +52,7 @@ const columns = [
               dataIndex: 'assists',
               key: 'assists',
               width: '60px',
+              align:'center',
               render: (text) => <>{Math.round(text)}</>,
             },
             {
@@ -56,6 +60,7 @@ const columns = [
               dataIndex: 'cs',
               key: 'cs',
               width: '50px',
+              align:'center',
               render: (text) => <>{Math.round(text)}</>,
             },
             {
@@ -63,6 +68,7 @@ const columns = [
               dataIndex: 'gpm',
               key: 'gpm',
               width: '50px',
+              align:'center',
               render: (text) => <>{Math.round(text)}</>,
             },
             {
@@ -70,6 +76,7 @@ const columns = [
               dataIndex: 'xpm',
               key: 'xpm',
               width: '50px',
+              align:'center',
               render: (text) => <>{Math.round(text)}</>,
             },
             {
@@ -77,6 +84,7 @@ const columns = [
               dataIndex: 'heal',
               key: 'heal',
               width: '80px',
+              align:'center',
               render: (text) => <>{Math.round(text)}</>,
             },
             {
@@ -84,6 +92,7 @@ const columns = [
               dataIndex: 'heroDamage',
               key: 'heroDamage',
               width: '80px',
+              align:'center',
               render: (text) => <>{Math.round(text)}</>,
             },
             {
@@ -91,6 +100,7 @@ const columns = [
               dataIndex: 'towerDamage',
               key: 'towerDamage',
               width: '80px',
+              align:'center',
               render: (text) => <>{Math.round(text)}</>,
             },
             {
@@ -98,6 +108,7 @@ const columns = [
               dataIndex: 'duration',
               key: 'duration',
               width: '100px',
+              align:'center',
               render: (text) => {
                   let hrs = Math.floor(+text / 60);
                   let min: string | number = Math.floor(+text % 60);
@@ -112,6 +123,7 @@ const columns = [
         title: 'Spiele',
         dataIndex: 'games',
         key: 'games',
+        align:'center',
         render: (_text, record: MappedTeamStats) => <>
             {record.matchWins} - {record.matchCount} <span className={'weak'}>{Math.round((record.matchWins * 100) / record.matchCount)}%</span>
 
@@ -130,8 +142,9 @@ const columns = [
         dataIndex: 'actions',
         key: 'actions',
         width: '100px',
+        align:'center',
         fixed: 'right',
-        render: (_text, record: MappedTeamStats) => <Link href={'/team/' + record.teamId}><Button>Breakdown</Button></Link>
+        render: (_text, record: MappedTeamStats) => <Link href={'/team/[teamId]'} as={'/team/' + record.teamId}><Button>Breakdown</Button></Link>
     },
 ];
 
