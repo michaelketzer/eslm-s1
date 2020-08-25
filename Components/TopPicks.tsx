@@ -86,7 +86,10 @@ export default function TopPicks({matches, teamId}: {matches: LeagueMatch[]; tea
             <Col lg={16} sm={8}>
                 <Row gutter={[{ xs: 8, sm: 16, lg: 24 }, { xs: 8, sm: 16, lg: 24 }]}>
                     <Col className="gutter-row" span={12}>
-                        <Card title={'Höchste Winrate'}>
+                    <Card title={<div className={'header'}>
+                            <div>Höchste Win Rate</div>
+                            <div className={'weak'}>in Spielen</div>
+                        </div>}>
                             <div className={'topPicks'}>
                                 {topWinRate.map(({id, won, games}, idx) => <Fragment key={id}>
                                     <Hero id={id} key={id} pos={idx + 1} addition={<div className={'right'}>{Math.floor(won*100/games)}% in {games}</div>}/>
@@ -95,7 +98,10 @@ export default function TopPicks({matches, teamId}: {matches: LeagueMatch[]; tea
                         </Card>
                     </Col>
                     <Col className="gutter-row" span={12}>
-                        <Card title={'Am häufigsten in der 1. Phase'}>
+                    <Card title={<div className={'header'}>
+                            <div>Am häufigsten in der 1. Phase</div>
+                            <div className={'weak'}>aus Picks</div>
+                        </div>}>
                             <div className={'topPicks'}>
                                 {topPicksFirstPhase.map(({id, phase1, games}, idx) => <Fragment key={id}>
                                     <Hero id={id} key={id} pos={idx + 1} addition={<div className={'right'}>{phase1} aus {games}</div>}/>
@@ -104,7 +110,10 @@ export default function TopPicks({matches, teamId}: {matches: LeagueMatch[]; tea
                         </Card>
                     </Col>
                     <Col className="gutter-row" span={12}>
-                        <Card title={'Am häufigsten in der 2. Phase'}>
+                        <Card title={<div className={'header'}>
+                                <div>Am häufigsten in der 2. Phase</div>
+                                <div className={'weak'}>aus Picks</div>
+                            </div>}>
                             <div className={'topPicks'}>
                                 {topPicksSecondPhase.map(({id, phase2, games}, idx) => <Fragment key={id}>
                                     <Hero id={id} key={id} pos={idx + 1} addition={<div className={'right'}>{phase2} aus {games}</div>}/>
@@ -113,7 +122,10 @@ export default function TopPicks({matches, teamId}: {matches: LeagueMatch[]; tea
                         </Card>
                     </Col>
                     <Col className="gutter-row" span={12}>
-                        <Card title={'Am häufigsten in der 3. Phase'}>
+                        <Card title={<div className={'header'}>
+                                <div>Am häufigsten in der 3. Phase</div>
+                                <div className={'weak'}>aus Picks</div>
+                            </div>}>
                             <div className={'topPicks'}>
                                 {topPicksThirdPhase.map(({id, phase3, games}, idx) => <Fragment key={id}>
                                     <Hero id={id} key={id} pos={idx + 1} addition={<div className={'right'}>{phase3} aus {games}</div>}/>
