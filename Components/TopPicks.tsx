@@ -1,7 +1,7 @@
 import { ReactElement, useMemo, Fragment } from "react";
 import { LeagueMatch } from "../pages/team/[teamId]";
 import Hero from "./Hero";
-import {Card, Col, Row, Tooltip} from 'antd';
+import {Card, Col, Row} from 'antd';
 
 interface HeroStats {
     games: number;
@@ -52,7 +52,12 @@ export default function TopPicks({matches, teamId}: {matches: LeagueMatch[]; tea
     }, [matches]);
 
     const topPicks = useMemo(() => {
-        return Object.entries(pickStats).sort(([, {games: a}], [, {games: b}]) => b - a).slice(0, 10).map(([id, data]) => ({id, ...data}));
+        return Object.entries(pickStats).sort(([, {games: a}], [, {games: b}]) => b - a).slice(0, 15).map(([id, data]) => ({id, ...data}));
+    }, [pickStats]);
+    const topWinRate = useMemo(() => {
+        return Object.entries(pickStats).sort(
+            ([, {games: gA, won: wA}], [, {games: gB, won: wB}]) => (gB > 3 && gA > 3 ? wB/gB - wA/gA : gB - gA) || gB - gA)
+        .slice(0, 5).map(([id, data]) => ({id, ...data}));
     }, [pickStats]);
     const topPicksFirstPhase = useMemo(() => {
         return Object.entries(pickStats).sort(([, {phase1: a}], [, {phase1: b}]) => b - a).slice(0, 5).map(([id, data]) => ({id, ...data}));
@@ -65,47 +70,69 @@ export default function TopPicks({matches, teamId}: {matches: LeagueMatch[]; tea
     }, [pickStats]);
 
     return <>
-        <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-            <Col className="gutter-row" span={6}>
-                <Card title={'Top Picks'}>
+        <Row gutter={[{ xs: 8, sm: 16, lg: 24 }, { xs: 8, sm: 16, lg: 24 }]} align="middle">
+            <Col className="gutter-row" span={8}>
+                <Card title={<div className={'header'}>
+                    <div>Am häufigsten gepickt</div>
+                    <div className={'weak'}>{matches.length} Spiel(e)</div>
+                </div>}>
                     <div className={'topPicks'}>
-                        {topPicks.map(({id, won, games}, idx) => <Fragment key={id}>
-                            <Hero id={id} key={id} pos={idx + 1} addition={<div className={'right'}>{games} Spiele <Tooltip title={'Win Rate'}><span className={'weak'}>{Math.floor((won*100)/games)}%</span></Tooltip></div>}/>
+                        {topPicks.map(({id, games}, idx) => <Fragment key={id}>
+                            <Hero id={id} key={id} pos={idx + 1} addition={<div className={'right'}>{games} Spiele</div>}/>
                         </Fragment>)}
                     </div>
                 </Card>
             </Col>
-            <Col className="gutter-row" span={6}>
-                <Card title={'Top Picks in der ersten Phase'}>
-                    <div className={'topPicks'}>
-                        {topPicksFirstPhase.map(({id, phase1, games}, idx) => <Fragment key={id}>
-                            <Hero id={id} key={id} pos={idx + 1} addition={<div className={'right'}>{phase1} aus {games} Spielen</div>}/>
-                        </Fragment>)}
-                    </div>
-                </Card>
-            </Col>
-            <Col className="gutter-row" span={6}>
-                <Card title={'Top Picks in der zweiten Phase'}>
-                    <div className={'topPicks'}>
-                        {topPicksSecondPhase.map(({id, phase2, games}, idx) => <Fragment key={id}>
-                            <Hero id={id} key={id} pos={idx + 1} addition={<div className={'right'}>{phase2} aus {games} Spielen</div>}/>
-                        </Fragment>)}
-                    </div>
-                </Card>
-            </Col>
-            <Col className="gutter-row" span={6}>
-                <Card title={'Top Picks in der dritten Phase'}>
-                    <div className={'topPicks'}>
-                        {topPicksThirdPhase.map(({id, phase3, games}, idx) => <Fragment key={id}>
-                            <Hero id={id} key={id} pos={idx + 1} addition={<div className={'right'}>{phase3} aus {games} Spielen</div>}/>
-                        </Fragment>)}
-                    </div>
-                </Card>
+            <Col lg={16} sm={8}>
+                <Row gutter={[{ xs: 8, sm: 16, lg: 24 }, { xs: 8, sm: 16, lg: 24 }]}>
+                    <Col className="gutter-row" span={12}>
+                        <Card title={'Höchste Winrate'}>
+                            <div className={'topPicks'}>
+                                {topWinRate.map(({id, won, games}, idx) => <Fragment key={id}>
+                                    <Hero id={id} key={id} pos={idx + 1} addition={<div className={'right'}>{Math.floor(won*100/games)}% in {games}</div>}/>
+                                </Fragment>)}
+                            </div>
+                        </Card>
+                    </Col>
+                    <Col className="gutter-row" span={12}>
+                        <Card title={'Am häufigsten in der 1. Phase'}>
+                            <div className={'topPicks'}>
+                                {topPicksFirstPhase.map(({id, phase1, games}, idx) => <Fragment key={id}>
+                                    <Hero id={id} key={id} pos={idx + 1} addition={<div className={'right'}>{phase1} aus {games}</div>}/>
+                                </Fragment>)}
+                            </div>
+                        </Card>
+                    </Col>
+                    <Col className="gutter-row" span={12}>
+                        <Card title={'Am häufigsten in der 2. Phase'}>
+                            <div className={'topPicks'}>
+                                {topPicksSecondPhase.map(({id, phase2, games}, idx) => <Fragment key={id}>
+                                    <Hero id={id} key={id} pos={idx + 1} addition={<div className={'right'}>{phase2} aus {games}</div>}/>
+                                </Fragment>)}
+                            </div>
+                        </Card>
+                    </Col>
+                    <Col className="gutter-row" span={12}>
+                        <Card title={'Am häufigsten in der 3. Phase'}>
+                            <div className={'topPicks'}>
+                                {topPicksThirdPhase.map(({id, phase3, games}, idx) => <Fragment key={id}>
+                                    <Hero id={id} key={id} pos={idx + 1} addition={<div className={'right'}>{phase3} aus {games}</div>}/>
+                                </Fragment>)}
+                            </div>
+                        </Card>
+                    </Col>
+                </Row>
             </Col>
         </Row>
 
 
         <style jsx>{`        
+            .header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+
             .topPicks {
                 display: grid;
                 grid-template-columns: max-content 56px max-content 1fr;
