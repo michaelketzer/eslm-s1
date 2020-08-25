@@ -89,7 +89,7 @@ export async function getStaticProps() {
         return {
             name: teamInfo.name,
             avatar: teamInfo.avatar ?? '',
-            points: teamInfo.points ?? '',
+            points: teamInfo.points ?? 0,
             matchCount,
             matchWins,
             ...teamStats
