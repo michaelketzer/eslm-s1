@@ -3,7 +3,7 @@ import {promises as fs} from 'fs';
 import TeamTable from "../Components/TeamTable";
 
 //#region <teams>
-interface TeamOverview {
+export interface TeamOverview {
     index: number;
     teamId: number;
     seriesCount: number;
