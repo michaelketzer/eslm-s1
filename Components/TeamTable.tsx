@@ -35,7 +35,7 @@ const columns = [
         key: 'games',
         align:'center',
         render: (_text, record: MappedTeamStats) => <>
-            {record.matchWins} - {record.matchCount} <span className={'weak'}>{Math.round((record.matchWins * 100) / record.matchCount)}%</span>
+            {record.matchWins}/{record.matchCount} <span className={'weak'}>{Math.round((record.matchWins * 100) / record.matchCount)}%</span>
 
             <style jsx>{`
                 .weak {

@@ -35,9 +35,9 @@ export function getPhase(order: number, gameVersion: number): number {
 export default function TopPicks({matches, teamId}: {matches: LeagueMatch[]; teamId: number}): ReactElement {
     const pickStats = useMemo(() => {
         return matches.reduce<{[x: string]: HeroStats}>((acc, match) => {
-            const {pickBans, radiantTeamId, didRadiantWin, id} = match;
+            const {pickBans, radiantTeamId, didRadiantWin} = match;
             const wasRadiant = teamId === radiantTeamId;
-            const won = (didRadiantWin && wasRadiant) || !didRadiantWin;
+            const won = didRadiantWin === wasRadiant;;
         
             pickBans.forEach(({order, isPick, heroId, isRadiant}) => {
                 if(isPick && wasRadiant === isRadiant) {
