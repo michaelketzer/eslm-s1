@@ -1,6 +1,7 @@
 import { ReactElement } from "react";
 import {promises as fs} from 'fs';
 import TeamTable from "../Components/TeamTable";
+import Head from 'next/head';
 
 //#region <teams>
 export interface TeamOverview {
@@ -176,7 +177,21 @@ const points = {
 };
 
 const Index = ({teams}: {teams: MappedTeamStats[]}): ReactElement => {
-    return <TeamTable teams={teams} />;
+    return <>
+        <Head>
+            <title>ESLM Season 1 - Streamdota</title>
+            <link rel="apple-touch-icon" sizes="180x180" href="/shared/apple-touch-icon.png" />
+            <link rel="icon" type="image/png" sizes="32x32" href="/shared/favicon-32x32.png" />
+            <link rel="icon" type="image/png" sizes="16x16" href="/shared/favicon-16x16.png" />
+            <link rel="manifest" href="/shared/site.webmanifest" />
+            <link rel="mask-icon" href="/shared/safari-pinned-tab.svg" color="#5bbad5" />
+            <link rel="shortcut icon" href="/shared/favicon.ico" />
+            <meta name="msapplication-TileColor" content="#da532c" />
+            <meta name="msapplication-config" content="/shared/browserconfig.xml" />
+            <meta name="theme-color" content="#ffffff" />
+        </Head>
+        <TeamTable teams={teams} />
+    </>;
 }
 
 export async function getStaticProps() {
