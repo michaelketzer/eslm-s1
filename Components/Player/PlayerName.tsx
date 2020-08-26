@@ -59,6 +59,8 @@ const playerMap = {
     113711310: 'Mangusu',
     177203952: 'Yuma',
     1062358752: 'Mego',
+    431770905: 'MIYO',
+    32128719: 'JMN',
 }
 
 export default function PlayerName({player}: {player: LeaguePlayer}): ReactElement {
@@ -74,7 +76,7 @@ export default function PlayerName({player}: {player: LeaguePlayer}): ReactEleme
         return player.name;
     }, [player]);
 
-    return <div className={'row'}>
+    return <div className={'row'} data-id={player.id}>
         <img src={"https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/" + player.avatar} alt="" className={'avatar'} />
         <a target={'_blank'} href={player.profileUri}>{name}</a>
 
