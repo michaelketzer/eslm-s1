@@ -238,10 +238,15 @@ export async function getStaticPaths() {
   };
 }
 
+const minDate = 1589846400;
+const excludeMin = 1596499200;
+const excludeMax = 1596758400;
+
 export async function getStaticProps({params: {teamId}}) {
     const rawMatches = await fs.readFile('./data/matches.json');
     const allMatches: LeagueMatch[] = JSON.parse(rawMatches as unknown as string);
-    const teamMatches = allMatches.filter(({radiantTeamId, direTeamId}) => direTeamId === +teamId || radiantTeamId === +teamId);
+    const teamMatches = allMatches
+        .filter(({startDateTime, radiantTeamId, direTeamId}) => (direTeamId === +teamId || radiantTeamId === +teamId) && (startDateTime >= minDate && (startDateTime < excludeMin || excludeMax < startDateTime)));
 
     return {
       props: {
