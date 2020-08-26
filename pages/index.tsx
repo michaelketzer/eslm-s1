@@ -13,7 +13,7 @@ export interface TeamOverview {
     matchWins: number;
     tmp: number;
 }
-interface Stats {
+export interface Stats {
     index: number;
     teamId: number;
     kills: number;
