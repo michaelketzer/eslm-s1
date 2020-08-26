@@ -4,6 +4,8 @@ import {Button, Input, Table, Tooltip} from 'antd';
 import Link from 'next/link';
 import accounting from 'accounting';
 
+const important = new Set([7976730, 7978409, 7750343, 7978292])
+
 const columns = [
     {
       title: 'Avatar',
@@ -163,6 +165,6 @@ export default function TeamTable({teams}: {teams: MappedTeamStats[]}): ReactEle
 
         {/**
          @ts-ignore */}
-        <Table dataSource={filtered} columns={columns} rowKey={'teamId'} pagination={false} scroll={{ x: 1600}} />
+        <Table rowSelection={{selectedRowKeys: important.values(), selections: false, columnWidth: 0}} dataSource={filtered} columns={columns} rowKey={'teamId'} pagination={false} scroll={{ x: 1600}} />
     </>;
 }
