@@ -17,7 +17,7 @@ export default function TeamStats({teamStats, teamOverview}: Props): ReactElemen
             <Typography.Title>Team Statistik</Typography.Title>
             <Row gutter={[{ xs: 8, sm: 16, lg: 24 }, { xs: 8, sm: 16, lg: 24 }]} align="middle">
                 <Col className="gutter-row" xs={12} md={8} lg={4}>
-                    <Card>
+                    <Card style={{boxShadow: '2px 2px 15px 0 rgba(0,0,0,.1)'}}>
                         <Statistic
                             title="Spiele"
                             value={teamOverview.matchCount}
@@ -27,7 +27,7 @@ export default function TeamStats({teamStats, teamOverview}: Props): ReactElemen
                     </Card>
                 </Col>
                 <Col className="gutter-row" xs={12} md={8} lg={4}>
-                    <Card>
+                    <Card style={{boxShadow: '2px 2px 15px 0 rgba(0,0,0,.1)'}}>
                         <Statistic
                             title="Gewonnen"
                             value={teamOverview.matchWins}
@@ -37,7 +37,7 @@ export default function TeamStats({teamStats, teamOverview}: Props): ReactElemen
                     </Card>
                 </Col>
                 <Col className="gutter-row" xs={12} md={8} lg={4}>
-                    <Card>
+                    <Card style={{boxShadow: '2px 2px 15px 0 rgba(0,0,0,.1)'}}>
                         <Statistic
                             title="Gewinnrate"
                             value={Math.floor((teamOverview.matchWins * 100) / teamOverview.matchCount)}
@@ -48,7 +48,7 @@ export default function TeamStats({teamStats, teamOverview}: Props): ReactElemen
                     </Card>
                 </Col>
                 <Col className="gutter-row" xs={12} md={8} lg={4}>
-                    <Card>
+                    <Card style={{boxShadow: '2px 2px 15px 0 rgba(0,0,0,.1)'}}>
                         <Statistic
                             title="Durchschnittliche Spielzeit"
                             value={hrs + ':' + min}
