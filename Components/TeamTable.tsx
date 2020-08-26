@@ -61,7 +61,7 @@ const columns = [
               render: (text) => <>{accounting.format(Math.round(text), 0, '.')}</>,
             },
             {
-                title: <Tooltip title="Kills"><div>Deaths</div></Tooltip>,
+                title: <Tooltip title="Deaths"><div>Deaths</div></Tooltip>,
               dataIndex: 'deaths',
               key: 'deaths',
               width: '80px',
@@ -69,7 +69,7 @@ const columns = [
               render: (text) => <>{accounting.format(Math.round(text), 0, '.')}</>,
             },
             {
-                title: <Tooltip title="Kills"><div>Assists</div></Tooltip>,
+                title: <Tooltip title="Assists"><div>Assists</div></Tooltip>,
               dataIndex: 'assists',
               key: 'assists',
               width: '80px',
