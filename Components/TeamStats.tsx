@@ -1,13 +1,18 @@
 import { ReactElement } from "react";
 import { Typography, Row, Col, Card, Statistic } from "antd";
-import { TeamOverview } from "../pages";
+import { TeamOverview, Stats } from "../pages";
 
 interface Props {
-    teamStats: TeamOverview;
+    teamStats: Stats;
+    teamOverview: TeamOverview;
 }
 
-export default function TeamStats({teamStats}: Props): ReactElement {
-    if(teamStats) {
+export default function TeamStats({teamStats, teamOverview}: Props): ReactElement {
+    if(teamOverview) {
+        const hrs = Math.floor(teamStats.duration / 60);
+        let min: number | string = Math.floor(teamStats.duration % 60);
+        min = min < 10 ? '0' + min : min;
+
         return <>
             <Typography.Title>Team Statistik</Typography.Title>
             <Row gutter={[{ xs: 8, sm: 16, lg: 24 }, { xs: 8, sm: 16, lg: 24 }]} align="middle">
@@ -15,7 +20,7 @@ export default function TeamStats({teamStats}: Props): ReactElement {
                     <Card>
                         <Statistic
                             title="Spiele"
-                            value={teamStats.matchCount}
+                            value={teamOverview.matchCount}
                             precision={0}
                             valueStyle={{ color: '#555' }}
                         />
@@ -25,7 +30,7 @@ export default function TeamStats({teamStats}: Props): ReactElement {
                     <Card>
                         <Statistic
                             title="Gewonnen"
-                            value={teamStats.matchWins}
+                            value={teamOverview.matchWins}
                             precision={0}
                             valueStyle={{ color: '#3f8600' }}
                         />
@@ -35,10 +40,20 @@ export default function TeamStats({teamStats}: Props): ReactElement {
                     <Card>
                         <Statistic
                             title="Gewinnrate"
-                            value={Math.floor((teamStats.matchWins * 100) / teamStats.matchCount)}
+                            value={Math.floor((teamOverview.matchWins * 100) / teamOverview.matchCount)}
                             precision={0}
                             valueStyle={{ color: '#cf1322' }}
                             suffix={'%'}
+                        />
+                    </Card>
+                </Col>
+                <Col className="gutter-row" xs={12} md={8} lg={4}>
+                    <Card>
+                        <Statistic
+                            title="Durchschnittliche Spielzeit"
+                            value={hrs + ':' + min}
+                            precision={0}
+                            valueStyle={{ color: 'rgb(102, 19, 207)' }}
                         />
                     </Card>
                 </Col>
