@@ -1,10 +1,11 @@
 import { ReactElement } from "react";
 import {promises as fs} from 'fs';
-import { TeamStats } from "..";
+import { TeamStats, TeamOverview } from "..";
 import TopPicks from "../../Components/TopPicks";
 import {PageHeader} from 'antd';
 import TopBans from "../../Components/TopBans";
 import TeamPlayers from "../../Components/TeamPlayers";
+import TeamStatsComponent from "../../Components/TeamStats";
 
 //#region <interface>
 interface PickBan {
@@ -193,8 +194,7 @@ const teams = {
     }
 };
 
-const Team = ({teamId, teamMatches, playersInTeam, players}: {teamId: number; teamMatches: LeagueMatch[]; playersInTeam: number[]; players: TeamStats['leaguePlayers']}): ReactElement => {
-    console.log(playersInTeam);
+const Team = ({teamId, teamMatches, playersInTeam, players, teamStats}: {teamId: number; teamMatches: LeagueMatch[]; playersInTeam: number[]; players: TeamStats['leaguePlayers']; teamStats: TeamOverview}): ReactElement => {
     const team = teams[teamId];
     return <>
         <PageHeader
@@ -204,6 +204,9 @@ const Team = ({teamId, teamMatches, playersInTeam, players}: {teamId: number; te
                 <div>{team.name}</div>
             </div>}
         >
+            <br />
+            <br />
+            <TeamStatsComponent teamStats={teamStats} />
             <br />
             <br />
             <TopPicks matches={teamMatches} teamId={teamId}/>
@@ -267,12 +270,15 @@ export async function getStaticProps({params: {teamId}}) {
         return acc;
     }, new Set());
 
+    const teamStats = response.leagueTableTeam.overview.find(({teamId: id}) => +id === +teamId);
+
     return {
       props: {
           players,
           playersInTeam: [...playersInTeam.values()],
           teamMatches,
           teamId: +teamId,
+          teamStats,
         },
     }
   }
