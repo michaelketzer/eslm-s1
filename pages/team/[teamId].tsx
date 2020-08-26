@@ -6,6 +6,7 @@ import {PageHeader} from 'antd';
 import TopBans from "../../Components/TopBans";
 import TeamPlayers from "../../Components/TeamPlayers";
 import TeamStatsComponent from "../../Components/TeamStats";
+import Head from 'next/head';
 
 //#region <interface>
 interface PickBan {
@@ -197,6 +198,19 @@ const teams = {
 const Team = ({teamId, teamMatches, playersInTeam, players, teamStats}: {teamId: number; teamMatches: LeagueMatch[]; playersInTeam: number[]; players: TeamStats['leaguePlayers']; teamStats: TeamOverview}): ReactElement => {
     const team = teams[teamId];
     return <>
+        <Head>
+            <title>ESLM Season 1 - {team.name}</title>
+            <link rel="apple-touch-icon" sizes="180x180" href="/shared/apple-touch-icon.png" />
+            <link rel="icon" type="image/png" sizes="32x32" href="/shared/favicon-32x32.png" />
+            <link rel="icon" type="image/png" sizes="16x16" href="/shared/favicon-16x16.png" />
+            <link rel="manifest" href="/shared/site.webmanifest" />
+            <link rel="mask-icon" href="/shared/safari-pinned-tab.svg" color="#5bbad5" />
+            <link rel="shortcut icon" href="/shared/favicon.ico" />
+            <meta name="msapplication-TileColor" content="#da532c" />
+            <meta name="msapplication-config" content="/shared/browserconfig.xml" />
+            <meta name="theme-color" content="#ffffff" />
+        </Head>
+
         <PageHeader
             onBack={() => window.history.back()}
             title={<div className={'row'}>
