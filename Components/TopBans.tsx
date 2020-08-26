@@ -19,18 +19,16 @@ export default function TopBans({matches, teamId}: {matches: LeagueMatch[]; team
             const wasRadiant = teamId === radiantTeamId;
 
             pickBans.forEach(({order, isPick, heroId, isRadiant}) => {
-                if(!isPick) {
-                    if((wasRadiant && !isRadiant) || !wasRadiant) {
-                        const stats = requireHeroStats(heroId, acc);
-                        stats.games = stats.games + 1;
-                        const phase = getPhase(order, match.gameVersionId);
-                        if(phase === 1) {
-                            stats.phase1 = stats.phase1 + 1;
-                        } else if(phase === 2) {
-                            stats.phase2 = stats.phase2 + 1;
-                        } else {
-                            stats.phase3 = stats.phase3 + 1;
-                        }
+                if((wasRadiant && !isRadiant) || !wasRadiant) {
+                    const stats = requireHeroStats(heroId, acc);
+                    stats.games = stats.games + 1;
+                    const phase = getPhase(order, match.gameVersionId);
+                    if(phase === 1) {
+                        stats.phase1 = stats.phase1 + 1;
+                    } else if(phase === 2) {
+                        stats.phase2 = stats.phase2 + 1;
+                    } else {
+                        stats.phase3 = stats.phase3 + 1;
                     }
                 }
             });
