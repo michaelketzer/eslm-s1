@@ -35,24 +35,22 @@ export function getPhase(order: number, gameVersion: number): number {
 export default function TopPicks({matches, teamId}: {matches: LeagueMatch[]; teamId: number}): ReactElement {
     const pickStats = useMemo(() => {
         return matches.reduce<{[x: string]: HeroStats}>((acc, match) => {
-            const {pickBans, radiantTeamId, didRadiantWin} = match;
+            const {pickBans, radiantTeamId, didRadiantWin, id} = match;
             const wasRadiant = teamId === radiantTeamId;
             const won = (didRadiantWin && wasRadiant) || !didRadiantWin;
         
             pickBans.forEach(({order, isPick, heroId, isRadiant}) => {
-                if(isPick) {
-                    if((wasRadiant && isRadiant) || !wasRadiant) {
-                        const stats = requireHeroStats(heroId, acc);
-                        stats.games = stats.games + 1;
-                        stats.won = stats.won + (won ? 1 : 0);
-                        const phase = getPhase(order, match.gameVersionId);
-                        if(phase === 1) {
-                            stats.phase1 = stats.phase1 + 1;
-                        } else if(phase === 2) {
-                            stats.phase2 = stats.phase2 + 1;
-                        } else {
-                            stats.phase3 = stats.phase3 + 1;
-                        }
+                if(isPick && wasRadiant === isRadiant) {
+                    const stats = requireHeroStats(heroId, acc);
+                    stats.games = stats.games + 1;
+                    stats.won = stats.won + (won ? 1 : 0);
+                    const phase = getPhase(order, match.gameVersionId);
+                    if(phase === 1) {
+                        stats.phase1 = stats.phase1 + 1;
+                    } else if(phase === 2) {
+                        stats.phase2 = stats.phase2 + 1;
+                    } else {
+                        stats.phase3 = stats.phase3 + 1;
                     }
                 }
             });
@@ -66,7 +64,7 @@ export default function TopPicks({matches, teamId}: {matches: LeagueMatch[]; tea
     const topWinRate = useMemo(() => {
         return Object.entries(pickStats).sort(
             ([, {games: gA, won: wA}], [, {games: gB, won: wB}]) => (gB > 3 && gA > 3 ? wB/gB - wA/gA : gB - gA) || gB - gA)
-        .slice(0, 5).map(([id, data]) => ({id, ...data}));
+        .slice(0, 10).map(([id, data]) => ({id, ...data}));
     }, [pickStats]);
     const topPicksFirstPhase = useMemo(() => {
         return Object.entries(pickStats).sort(([, {phase1: a, games: gA}], [, {phase1: b, games: gB}]) => b - a || gB - gA).slice(0, 5).map(([id, data]) => ({id, ...data}));
