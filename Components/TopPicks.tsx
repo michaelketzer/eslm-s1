@@ -1,7 +1,7 @@
 import { ReactElement, useMemo, Fragment } from "react";
 import { LeagueMatch } from "../pages/team/[teamId]";
 import Hero from "./Hero";
-import {Card, Col, Row} from 'antd';
+import {Card, Col, Row, Typography} from 'antd';
 
 interface HeroStats {
     games: number;
@@ -77,6 +77,7 @@ export default function TopPicks({matches, teamId}: {matches: LeagueMatch[]; tea
     }, [pickStats]);
 
     return <>
+        <Typography.Title>Statistiken zu Picks</Typography.Title>
         <Row gutter={[{ xs: 8, sm: 16, lg: 24 }, { xs: 8, sm: 16, lg: 24 }]} align="middle">
             <Col className="gutter-row" xs={24} md={24} lg={12} xl={8}>
                 <Card title={<div className={'header'}>

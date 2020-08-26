@@ -36,6 +36,83 @@ interface TeamHeroes {
         imp: number;
     }>;
 }
+interface PlayerHero {
+    index: number;
+    steamId: number;
+    values: Array<{
+        heroId: number;
+        matchCount: number;
+        matchWins: number;
+        imp: number;
+    }>;
+}
+
+interface PlayerOverview {
+    index: number;
+    steamId: number;
+    points: number;
+    earnings: number;
+    seriesCount: number;
+    seriesWins: number;
+    matchCount: number;
+    matchWins: number;
+    imp: number;
+}
+
+interface PlayerStats {
+    index: number;
+    steamId: number;
+    kills: number;
+    deaths: number;
+    assists: number;
+    cs: number;
+    gpm: number;
+    xpm: number;
+    heal: number;
+    heroDamage: number;
+    towerDamage: number;
+    killContribution: number;
+}
+
+export interface LeaguePlayer {
+    id: number;
+    steamId: number;
+    lastActiveTime: string;
+    profileUri: string;
+    realName: string;
+    timeCreated: number;
+    countryCode: string;
+    cityId: number;
+    communityVisibleState: number;
+    name: string;
+    avatar: string;
+    primaryClanId: number;
+    soloRank: number;
+    partyRank: number;
+    isDotaPlusSubscriber: boolean;
+    dotaPlusOriginalStartDate: number;
+    isAnonymous: boolean;
+    isStratzAnonymous: boolean;
+    seasonRank: number;
+    seasonLeaderboardRank: number;
+    seasonLeaderboardDivisionId: number;
+    proSteamAccount?: {
+        steamId: number;
+        name: string;
+        fantasyRole: number;
+        teamId: number;
+        sponsor: string;
+        isLocked: boolean;
+        isPro: boolean;
+        totalEarnings: number;
+        tiWins: number;
+        isTIWinner: boolean
+    };
+    smurfFlag: number;
+    smurfCheckDate: number;
+    lastMatchDateTime: number;
+    lastMatchRegionId: number;
+}
 
 export interface TeamStats {
     leagueTableTeam: {
@@ -44,6 +121,13 @@ export interface TeamStats {
         teamCount: number;
         heroes: Array<TeamHeroes>;
     }
+    leagueTablePlayer: {
+        overview: Array<PlayerOverview>;
+        stats: Array<PlayerStats>;
+        playerCount: number;
+        heroes: Array<PlayerHero>;
+
+    };
     leagueTeams: {
         [x: string]: {
             name: string;
@@ -51,6 +135,9 @@ export interface TeamStats {
             points?: number;
         };
     };
+    leaguePlayers: {
+        [x: string]: LeaguePlayer;
+    }
 }
 
 export interface MappedTeamStats {
@@ -73,6 +160,21 @@ export interface MappedTeamStats {
 }
 //#endregion
 
+const points = {
+    1055544: 42,
+    4448822: 24,
+    7734344: 33,
+    7750343: 42,
+    7766084: 0,
+    7871207: 18,
+    7938593: 9,
+    7958903: 36,
+    7976730: 54,
+    7978292: 39,
+    7978409: 45,
+    7979749: 18,
+};
+
 const Index = ({teams}: {teams: MappedTeamStats[]}): ReactElement => {
     return <TeamTable teams={teams} />;
 }
@@ -89,7 +191,7 @@ export async function getStaticProps() {
         return {
             name: teamInfo.name,
             avatar: teamInfo.avatar ?? '',
-            points: teamInfo.points ?? 0,
+            points: points[teamId] ?? 0,
             matchCount,
             matchWins,
             ...teamStats

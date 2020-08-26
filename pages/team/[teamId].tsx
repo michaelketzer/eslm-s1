@@ -4,6 +4,7 @@ import { TeamStats } from "..";
 import TopPicks from "../../Components/TopPicks";
 import {PageHeader} from 'antd';
 import TopBans from "../../Components/TopBans";
+import TeamPlayers from "../../Components/TeamPlayers";
 
 //#region <interface>
 interface PickBan {
@@ -16,7 +17,7 @@ interface PickBan {
     wasBannedSuccessfully: boolean;
 }
 
-interface HeroPlayer {
+export interface HeroPlayer {
     matchId: number;
     playerSlot: number;
     heroId: number;
@@ -192,7 +193,8 @@ const teams = {
     }
 };
 
-const Team = ({teamId, teamMatches}: {teamId: number; teamMatches: LeagueMatch[]}): ReactElement => {
+const Team = ({teamId, teamMatches, playersInTeam, players}: {teamId: number; teamMatches: LeagueMatch[]; playersInTeam: number[]; players: TeamStats['leaguePlayers']}): ReactElement => {
+    console.log(playersInTeam);
     const team = teams[teamId];
     return <>
         <PageHeader
@@ -208,6 +210,9 @@ const Team = ({teamId, teamMatches}: {teamId: number; teamMatches: LeagueMatch[]
             <br />
             <br />
             <TopBans matches={teamMatches} teamId={teamId}/>
+            <br />
+            <br />
+            <TeamPlayers playersInTeam={playersInTeam} players={players} matches={teamMatches}/>
         </PageHeader>
 
         <style jsx>{`
@@ -244,15 +249,31 @@ const excludeMax = 1596758400;
 
 export async function getStaticProps({params: {teamId}}) {
     const rawMatches = await fs.readFile('./data/matches.json');
+    const rawTeams = await fs.readFile('./data/teams.json');
     const allMatches: LeagueMatch[] = JSON.parse(rawMatches as unknown as string);
     const teamMatches = allMatches
         .filter(({startDateTime, radiantTeamId, direTeamId}) => (direTeamId === +teamId || radiantTeamId === +teamId) && (startDateTime >= minDate && (startDateTime < excludeMin || excludeMax < startDateTime)));
 
+    const response: TeamStats = JSON.parse(rawTeams as unknown as string);
+    const players = response.leaguePlayers;
+    const playersInTeam = teamMatches.reduce<Set<number>>((acc, match) => {
+        const teamRadiant = match.radiantTeamId === +teamId;
+        match.players.forEach((player) => {
+            if(player.isRadiant === teamRadiant) {
+                acc.add(player.steamAccountId);
+            }
+        })
+
+        return acc;
+    }, new Set());
+
     return {
       props: {
+          players,
+          playersInTeam: [...playersInTeam.values()],
           teamMatches,
           teamId: +teamId,
-      },
+        },
     }
   }
   
